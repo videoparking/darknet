@@ -1,6 +1,7 @@
 from ctypes import *
 import math
 import random
+import os
 
 def sample(probs):
     s = sum(probs)
@@ -45,7 +46,7 @@ class METADATA(Structure):
     
 
 #lib = CDLL("/home/pjreddie/documents/darknet/libdarknet.so", RTLD_GLOBAL)
-lib = CDLL("libdarknet.so", RTLD_GLOBAL)
+lib = CDLL(os.environ.get("LIBDARKNET_SO_PATH","libdarknet.so"), RTLD_GLOBAL)
 lib.network_width.argtypes = [c_void_p]
 lib.network_width.restype = c_int
 lib.network_height.argtypes = [c_void_p]
@@ -151,6 +152,6 @@ if __name__ == "__main__":
     net = load_net("cfg/tiny-yolo.cfg", "tiny-yolo.weights", 0)
     meta = load_meta("cfg/coco.data")
     r = detect(net, meta, "data/dog.jpg")
-    print r
+    print(r)
     
 
