@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -x
+
+./darknet detect cfg/yolov3.cfg ../detector/yolov3.weights "$*"
